@@ -33,8 +33,8 @@ os.system("mkdir charts || rm charts/*")
 
 # Generating Graphs...
 for i in subjects:
-    counts, bins, patches = plt.hist(data[i], 
-                                     bins=[x for x in range(0, int(max(data[i]))+5, 5)], 
+    counts, bins, patches = plt.hist(data[i],
+                                     bins=[x for x in range(0, int(max(data[i]))+5, 5)],
                                      color='skyblue'
                                      )
 
@@ -85,16 +85,22 @@ for index, row in data.iterrows():
 
 summary = []
 for i in subjects:
-    summary.append(f"Statistics for subject {i}")
-    summary.append(f"Mean: {data[i].mean()}")
-    summary.append(f"Median: {data[i].median()}")
-    summary.append(f"Standard deviation: {data[i].std()}")
-    summary.append("")
+    summary.append(f"Statistics for subject {i}\n")
+    summary.append(f"Mean: {data[i].mean()}\n")
+    summary.append(f"Median: {data[i].median()}\n")
+    summary.append(f"Standard deviation: {data[i].std()}\n")
+    summary.append("\n")
 
-summary.append("Overall Statistics")
-summary.append(f"Mean: {data['average_score'].mean()}")
-summary.append(f"Median: {data['average_score'].median()}")
-summary.append(f"Standard deviation: {data['average_score'].std()}")
+summary.append("Overall Statistics\n")
+summary.append(f"Mean: {data['average_score'].mean()}\n")
+summary.append(f"Median: {data['average_score'].median()}\n")
+summary.append(f"Standard deviation: {data['average_score'].std()}\n")
+
+summary.append("\n")
+
+summary.append("Top Students:\n")
+summary.append(str(data[['roll_no', 'name'] + ["rank_"+x for x in subjects] + ['rank', 'percentile']].sort_values(by="percentile", ascending=False).to_string()))
+
 
 with open("out/Comprehensive_analysis.txt", 'w') as f:
     f.writelines(summary)
